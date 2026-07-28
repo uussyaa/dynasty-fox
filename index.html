@@ -1,55 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
+
 <head>
-<title>Dynasty Fox</title>
+
+<meta charset="UTF-8">
+
+<title>Династия Фокс</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
-<div class="header">
-<h1>🦊 Dynasty Fox</h1>
-</div>
+
+<header>
+
+<h1>🦊 Династия Фокс</h1>
+
+</header>
 
 
-<div class="container">
 
-<div class="sidebar">
+<div class="layout">
+
+
+<aside class="sidebar">
 
 <h2>Персонажи</h2>
 
-<button onclick="show('elizabeth')">
-Elizabeth Fox
-</button>
+<div id="characterList"></div>
 
-<button onclick="show('renesme')">
-Renesme Fox
-</button>
+</aside>
 
 
-</div>
+
+<main>
 
 
-<div class="content">
+<section id="tree">
+
+<h2>Семейное древо</h2>
+
+<div id="familyTree"></div>
 
 
-<div id="character">
+</section>
 
-<h2>Выбери персонажа</h2>
+
+
+<section id="profile">
+
+<h2>Выберите персонажа</h2>
 
 <p>
-Здесь будет история семьи Fox.
+Нажмите на имя в списке слева.
 </p>
 
-</div>
+</section>
+
+
+</main>
 
 
 </div>
 
-</div>
 
+
+<script src="data.js"></script>
 
 <script src="script.js"></script>
 
+
 </body>
+
 </html>
