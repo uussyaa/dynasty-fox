@@ -23,7 +23,7 @@ type: "ex husband"
 ],
 
 children:[
-"andrew fox"
+"andrew"
 ],
 
 story:
