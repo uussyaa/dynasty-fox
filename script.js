@@ -3,13 +3,13 @@ const profile = document.getElementById("profile");
 const tree = document.getElementById("familyTree");
 
 
-// =======================
-// СПИСОК ПЕРСОНАЖЕЙ
-// =======================
+// ======================
+// СПИСОК СЛЕВА
+// ======================
 
 characters.forEach(person => {
 
-    let button = document.createElement("button");
+    const button = document.createElement("button");
 
     button.className = "characterButton";
 
@@ -24,98 +24,183 @@ characters.forEach(person => {
 
 
 
-// =======================
+// ======================
 // КАРТОЧКА ПЕРСОНАЖА
-// =======================
-
+// ======================
 
 function showProfile(id){
 
-
-let person = characters.find(
-    item => item.id === id
-);
-
-
-if(!person) return;
+    const person = characters.find(
+        p => p.id === id
+    );
 
 
-
-profile.innerHTML = `
-
-
-<div class="profileCard">
-
-
-<img 
-class="profilePhoto"
-src="images/${person.photo}"
->
-
-
-<h2>${person.name}</h2>
-
-
-<p>
-<b>Статус:</b>
-${person.status}
-</p>
+    if(!person) return;
 
 
 
-<p>
-<b>Родители:</b><br>
+    profile.innerHTML = `
 
-${getNames(person.parents)}
+    <div class="profileCard">
 
-</p>
-
-
-
-
-<p>
-<b>Партнёр:</b><br>
-
-${getPartners(person.partners)}
-
-</p>
+    <img 
+    class="profilePhoto"
+    src="images/${person.photo}"
+    >
 
 
+    <h2>${person.name}</h2>
 
 
-<p>
-<b>Бывшие:</b><br>
-
-${getPartners(person.exPartners)}
-
-</p>
+    <p>
+    <b>Статус:</b>
+    ${person.status}
+    </p>
 
 
+    <p>
+    <b>Родители:</b><br>
+    ${getPeople(person.parents)}
+    </p>
 
-<p>
-<b>Дети:</b><br>
 
-${getChildren(person.children)}
+    <p>
+    <b>Партнёр:</b><br>
+    ${getPerson(person.partner)}
+    </p>
 
-</p>
+
+    <p>
+    <b>Бывшие:</b><br>
+    ${getPeople(person.exPartners)}
+    </p>
+
+
+    <p>
+    <b>Дети:</b><br>
+    ${getPeople(person.children)}
+    </p>
+
+
+    <h3>История</h3>
+
+    <p>
+    ${person.story}
+    </p>
+
+
+    </div>
+
+    `;
+}
 
 
 
 
-<h3>История</h3>
 
-<p>
-${person.story}
-</p>
+// ======================
+// ПОИСК ИМЕНИ
+// ======================
+
+function findPerson(id){
+
+    return characters.find(
+        p=>p.id===id
+    );
+
+}
 
 
 
-</div>
+function getPerson(id){
+
+    if(!id)
+        return "Нет";
 
 
-`;
+    const person=findPerson(id);
+
+    return person ? person.name : "Нет";
+
+}
 
 
+
+function getPeople(ids){
+
+    if(!ids || ids.length===0)
+        return "Нет";
+
+
+    return ids.map(id=>{
+
+        const person=findPerson(id);
+
+        return person ? person.name : "";
+
+    }).join("<br>");
+
+}
+
+
+
+
+// ======================
+// СОЗДАНИЕ УЗЛА
+// ======================
+
+
+function createNode(id, type="main"){
+
+
+    const person=findPerson(id);
+
+
+    if(!person) return null;
+
+
+    const div=document.createElement("div");
+
+
+    div.className="treeNode " + type;
+
+
+
+    div.onclick=()=>{
+        showProfile(person.id);
+    };
+
+
+
+    div.innerHTML=`
+
+    <img src="images/${person.photo}">
+
+    <div class="treeName">
+    ${person.name}
+    </div>
+
+    `;
+
+
+    return div;
+
+}
+
+
+
+
+// ======================
+// ЛИНИЯ
+// ======================
+
+function createLine(){
+
+    const line=document.createElement("div");
+
+    line.className="line";
+
+    return line;
 
 }
 
@@ -123,69 +208,28 @@ ${person.story}
 
 
 
-// =======================
-// ПОИСК ИМЁН
-// =======================
+// ======================
+// ПОКОЛЕНИЕ
+// ======================
 
 
-function getNames(ids){
+function createGeneration(nodes){
 
 
-if(!ids || ids.length===0)
+    const generation=document.createElement("div");
 
-return "Не указаны";
-
-
-return ids.map(id=>{
-
-let person =
-characters.find(p=>p.id===id);
+    generation.className="generation";
 
 
-return person ? person.name : id;
+    nodes.forEach(node=>{
+
+        if(node)
+        generation.appendChild(node);
+
+    });
 
 
-}).join("<br>");
-
-}
-
-
-
-
-function getChildren(ids){
-
-
-if(!ids || ids.length===0)
-
-return "Нет";
-
-
-return ids.map(id=>{
-
-
-let person =
-characters.find(p=>p.id===id);
-
-
-return person ? person.name : id;
-
-
-}).join("<br>");
-
-}
-
-
-
-
-function getPartners(arr){
-
-
-if(!arr || arr.length===0)
-
-return "Нет";
-
-
-return arr.map(p=>p.name).join("<br>");
+    return generation;
 
 }
 
@@ -193,88 +237,113 @@ return arr.map(p=>p.name).join("<br>");
 
 
 
-// =======================
-// ДРЕВО
-// =======================
-
-
-function createNode(person){
-
-
-let div=document.createElement("div");
-
-
-div.className="treeNode";
-
-
-div.onclick=()=>showProfile(person.id);
-
-
-
-div.innerHTML=`
-
-<img src="images/${person.photo}">
-
-
-<p>
-${person.name}
-</p>
-
-`;
-
-
-return div;
-
-
-}
-
-
+// ======================
+// ПОСТРОЕНИЕ ДЕРЕВА
+// ======================
 
 
 function drawTree(){
 
 
+tree.innerHTML="";
 
-let root =
-characters.find(
-p=>p.id==="elizabeth"
+
+
+// 1 поколение
+
+tree.appendChild(
+createGeneration([
+
+createNode("alex","ex"),
+
+createNode("elizabeth"),
+
+createNode("thomas","partner")
+
+])
 );
 
 
 
-let generation0 =
-createNode(root);
+tree.appendChild(createLine());
 
 
 
-tree.appendChild(generation0);
 
+// 2 поколение
 
+tree.appendChild(
+createGeneration([
 
-let children =
-root.children;
+createNode("gabriella","ex"),
 
+createNode("andrew"),
 
+createNode("sheila","partner")
 
-children.forEach(id=>{
-
-
-let child =
-characters.find(
-p=>p.id===id
+])
 );
 
 
 
-let node =
-createNode(child);
-
-
-tree.appendChild(node);
+tree.appendChild(createLine());
 
 
 
-});
+
+// 3 поколение
+
+tree.appendChild(
+createGeneration([
+
+createNode("serena"),
+
+createNode("felix","partner")
+
+])
+);
+
+
+
+tree.appendChild(createLine());
+
+
+
+
+// 4 поколение
+
+tree.appendChild(
+createGeneration([
+
+createNode("jeanette","ex"),
+
+createNode("ares"),
+
+createNode("lilith","partner")
+
+])
+);
+
+
+
+tree.appendChild(createLine());
+
+
+
+
+// 5 поколение
+
+tree.appendChild(
+createGeneration([
+
+createNode("renesme"),
+
+createNode("lolita"),
+
+createNode("theodor")
+
+])
+);
 
 
 
