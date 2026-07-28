@@ -188,5 +188,149 @@ story:
 
 ];
 
+,
+
+{
+id:"thomas",
+
+name:"Томас Фокс",
+
+photo:"thomas.png",
+
+status:"Жив",
+
+parents:[],
+
+partners:[
+{
+name:"Элизабет Фокс",
+type:"partner"
+}
+],
+
+exPartners:[],
+
+children:[
+"andrew"
+],
+
+story:
+`Томас Фокс стал человеком, рядом с которым Элизабет смогла начать новую жизнь. Его дом стал частью истории, с которой началась династия Фокс.`
+},
+
+
+{
+id:"alex",
+
+name:"Алекс Фокс",
+
+photo:"alex.png",
+
+status:"Жив",
+
+parents:[],
+
+partners:[],
+
+exPartners:[
+{
+name:"Элизабет Фокс",
+type:"ex husband"
+}
+],
+
+children:[
+"andrew"
+],
+
+story:
+`Алекс Фокс — бывший супруг Элизабет и отец наследника второго поколения Эндрю. Его поступки стали одной из первых больших драм в истории семьи.`
+},
+
+
+{
+id:"gabriella",
+
+name:"Габриелла Фокс",
+
+photo:"gabriella.png",
+
+status:"Жива",
+
+parents:[],
+
+partners:[],
+
+exPartners:[
+{
+name:"Эндрю Фокс",
+type:"ex wife"
+}
+],
+
+children:[
+"serena"
+],
+
+story:
+`Габриелла Фокс — мать Серены и часть прошлого второго поколения династии.`
+},
+
+
+{
+id:"sheila",
+
+name:"Шейла Фокс",
+
+photo:"sheila.png",
+
+status:"Жива",
+
+parents:[],
+
+partners:[
+{
+name:"Эндрю Фокс",
+type:"partner"
+}
+],
+
+exPartners:[],
+
+children:[],
+
+story:
+`Шейла Фокс стала супругой Эндрю и частью истории семьи Фокс.`
+},
+
+
+{
+id:"felix",
+
+name:"Феликс Сенека",
+
+photo:"felix.png",
+
+status:"Умер",
+
+parents:[],
+
+partners:[
+{
+name:"Серена Фокс",
+type:"partner"
+}
+],
+
+exPartners:[],
+
+children:[
+"raquel",
+"ares"
+],
+
+story:
+`Феликс Сенека — супруг Серены Фокс и отец следующего поколения семьи.`
+}
 
 
