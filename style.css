@@ -1,69 +1,148 @@
 body {
-
-font-family: Arial;
-background:#f4f4f4;
-margin:0;
-
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#9dbf00;
+    color:white;
 }
 
 
-.header {
-
-background:#72c94c;
-padding:20px;
-text-align:center;
-
+header {
+    text-align:center;
+    padding:25px;
+    background:white;
+    color:#f69f32;
+    font-size:30px;
+    font-weight:900;
 }
 
 
-.container {
 
-display:flex;
-
+.layout {
+    display:flex;
+    min-height:100vh;
 }
+
 
 
 .sidebar {
 
-width:250px;
-background:white;
-height:100vh;
-padding:20px;
+    width:250px;
+    background:#20725f;
+    padding:20px;
 
 }
 
 
-.sidebar button {
 
-display:block;
-width:100%;
-margin:10px;
-padding:10px;
+.characterButton {
 
-cursor:pointer;
+    width:100%;
+    margin:7px 0;
+    padding:12px;
 
-}
+    border:none;
+    border-radius:20px;
 
+    background:white;
+    color:#20725f;
 
-.content {
+    font-weight:bold;
 
-padding:30px;
-
-}
-
-
-.card {
-
-background:white;
-padding:20px;
-border-radius:15px;
+    cursor:pointer;
 
 }
 
 
-.card img {
 
-width:200px;
-border-radius:15px;
+.characterButton:hover {
+
+    transform:scale(1.05);
+
+}
+
+
+
+main {
+
+    flex:1;
+    padding:30px;
+
+}
+
+
+
+
+#familyTree {
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:30px;
+
+}
+
+
+
+.treeNode {
+
+    text-align:center;
+    cursor:pointer;
+
+}
+
+
+
+.treeNode img {
+
+
+    width:70px;
+    height:70px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:3px solid white;
+
+}
+
+
+
+.treeNode p {
+
+    font-weight:bold;
+
+}
+
+
+
+
+.profileCard {
+
+
+    background:white;
+
+    color:#333;
+
+    border-radius:25px;
+
+    padding:30px;
+
+    max-width:500px;
+
+}
+
+
+
+.profilePhoto {
+
+
+    width:200px;
+
+    height:200px;
+
+    border-radius:50%;
+
+    object-fit:cover;
 
 }
