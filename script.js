@@ -1,88 +1,285 @@
-
-let characters = {
-
-
-elizabeth: {
-
-name:"Elizabeth Fox",
-
-status:"Жива",
-
-photo:"images/elizabeth.jpg",
-
-parents:"Неизвестно",
-
-children:"Andrew Fox",
-
-story:
-"Основательница династии Fox."
-
-},
+const list = document.getElementById("characterList");
+const profile = document.getElementById("profile");
+const tree = document.getElementById("familyTree");
 
 
-renesme: {
+// =======================
+// СПИСОК ПЕРСОНАЖЕЙ
+// =======================
 
-name:"Renesme Fox",
+characters.forEach(person => {
 
-status:"Жива",
+    let button = document.createElement("button");
 
-photo:"images/renesme.jpg",
+    button.className = "characterButton";
 
-parents:
-"Ares Fox, Janette Florencio",
+    button.innerHTML = person.name;
 
-children:
-"Будущие дети",
+    button.onclick = () => showProfile(person.id);
 
-story:
-"Студентка Foxbury Institute. Изучает биологию."
+    list.appendChild(button);
 
-}
-
-
-};
+});
 
 
 
-function show(id){
+
+// =======================
+// КАРТОЧКА ПЕРСОНАЖА
+// =======================
 
 
-let c = characters[id];
+function showProfile(id){
 
 
-document.getElementById("character").innerHTML=`
-
-<div class="card">
-
-<h2>${c.name}</h2>
+let person = characters.find(
+    item => item.id === id
+);
 
 
-<img src="${c.photo}">
+if(!person) return;
+
+
+
+profile.innerHTML = `
+
+
+<div class="profileCard">
+
+
+<img 
+class="profilePhoto"
+src="images/${person.photo}"
+>
+
+
+<h2>${person.name}</h2>
 
 
 <p>
-<b>Статус:</b> ${c.status}
+<b>Статус:</b>
+${person.status}
 </p>
+
 
 
 <p>
-<b>Родители:</b> ${c.parents}
+<b>Родители:</b><br>
+
+${getNames(person.parents)}
+
 </p>
+
+
 
 
 <p>
-<b>Дети:</b> ${c.children}
+<b>Партнёр:</b><br>
+
+${getPartners(person.partners)}
+
 </p>
+
+
 
 
 <p>
-<b>История:</b><br>
-${c.story}
+<b>Бывшие:</b><br>
+
+${getPartners(person.exPartners)}
+
 </p>
+
+
+
+<p>
+<b>Дети:</b><br>
+
+${getChildren(person.children)}
+
+</p>
+
+
+
+
+<h3>История</h3>
+
+<p>
+${person.story}
+</p>
+
 
 
 </div>
 
+
 `;
 
+
+
 }
+
+
+
+
+
+// =======================
+// ПОИСК ИМЁН
+// =======================
+
+
+function getNames(ids){
+
+
+if(!ids || ids.length===0)
+
+return "Не указаны";
+
+
+return ids.map(id=>{
+
+let person =
+characters.find(p=>p.id===id);
+
+
+return person ? person.name : id;
+
+
+}).join("<br>");
+
+}
+
+
+
+
+function getChildren(ids){
+
+
+if(!ids || ids.length===0)
+
+return "Нет";
+
+
+return ids.map(id=>{
+
+
+let person =
+characters.find(p=>p.id===id);
+
+
+return person ? person.name : id;
+
+
+}).join("<br>");
+
+}
+
+
+
+
+function getPartners(arr){
+
+
+if(!arr || arr.length===0)
+
+return "Нет";
+
+
+return arr.map(p=>p.name).join("<br>");
+
+}
+
+
+
+
+
+// =======================
+// ДРЕВО
+// =======================
+
+
+function createNode(person){
+
+
+let div=document.createElement("div");
+
+
+div.className="treeNode";
+
+
+div.onclick=()=>showProfile(person.id);
+
+
+
+div.innerHTML=`
+
+<img src="images/${person.photo}">
+
+
+<p>
+${person.name}
+</p>
+
+`;
+
+
+return div;
+
+
+}
+
+
+
+
+function drawTree(){
+
+
+
+let root =
+characters.find(
+p=>p.id==="elizabeth"
+);
+
+
+
+let generation0 =
+createNode(root);
+
+
+
+tree.appendChild(generation0);
+
+
+
+let children =
+root.children;
+
+
+
+children.forEach(id=>{
+
+
+let child =
+characters.find(
+p=>p.id===id
+);
+
+
+
+let node =
+createNode(child);
+
+
+tree.appendChild(node);
+
+
+
+});
+
+
+
+}
+
+
+
+drawTree();
